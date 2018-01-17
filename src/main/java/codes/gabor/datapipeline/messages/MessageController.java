@@ -29,7 +29,7 @@ public class MessageController {
     public ResponseEntity createMessage(@RequestBody String message) {
         LOGGER.info("Request: POST:/api/messages - Add message to queue");
 
-        messageService.consumeMessage(message);
+        messageService.publishMessage(message);
 
         return new ResponseEntity(HttpStatus.CREATED);
     }
