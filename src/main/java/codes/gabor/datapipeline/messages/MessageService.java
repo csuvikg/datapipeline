@@ -12,15 +12,23 @@ public class MessageService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageService.class);
 
     private RedisMessagePublisher publisher;
+    private MessageRepository repository;
 
     @Autowired
-    public MessageService(RedisMessagePublisher publisher) {
+    public MessageService(RedisMessagePublisher publisher, MessageRepository repository) {
         this.publisher = publisher;
+        this.repository = repository;
     }
 
-    public void consumeMessage(String message) {
+    public void publishMessage(String message) {
         LOGGER.info("Publishing message...");
 
         publisher.publish(message);
+    }
+
+    public void consumeMessage(Message message) {
+        LOGGER.info("Persisting message...");
+
+        repository.save(message);
     }
 }
