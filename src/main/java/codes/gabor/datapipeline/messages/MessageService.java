@@ -19,7 +19,7 @@ public class MessageService {
     }
 
     public void consumeMessage(String message) {
-        LOGGER.info("Sending message to consumer.");
+        LOGGER.info("Publishing message...");
 
         publisher.publish(message);
     }
