@@ -35,9 +35,9 @@ public class MessageController {
     }
 
     @GetMapping
-    public ResponseEntity<List<String>> getMessages() {
+    public ResponseEntity<List<Message>> getMessages() {
         LOGGER.info("Request: GET:/api/messages - Get all messages from the database");
 
-        return new ResponseEntity<>(new ArrayList<>(Arrays.asList("Hello", "World")), HttpStatus.OK);
+        return new ResponseEntity<>(messageService.findAll(), HttpStatus.OK);
     }
 }

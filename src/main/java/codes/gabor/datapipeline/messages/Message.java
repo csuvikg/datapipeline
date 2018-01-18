@@ -14,6 +14,11 @@ public class Message {
 
     private String content;
 
+    // Default constructor is provided due to Jackson usage
+    public Message() {
+
+    }
+
     public Message(String content) {
         this.content = content;
     }

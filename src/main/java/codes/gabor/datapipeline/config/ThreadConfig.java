@@ -7,8 +7,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 @Configuration
 public class ThreadConfig {
@@ -22,7 +22,13 @@ public class ThreadConfig {
 
     @Bean
     public TaskExecutor threadPoolTaskExecutor() {
-        return new SimpleAsyncTaskExecutor();
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(2);
+        executor.setMaxPoolSize(5);
+        executor.setThreadNamePrefix("executor_thread");
+        executor.initialize();
+
+        return executor;
     }
 
     @Bean
