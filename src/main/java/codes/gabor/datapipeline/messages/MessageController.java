@@ -6,12 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -21,22 +20,25 @@ public class MessageController {
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageController.class);
 
     private MessageService messageService;
+    private SimpMessagingTemplate template;
 
     @Autowired
-    public MessageController(MessageService messageService) {
+    public MessageController(MessageService messageService, SimpMessagingTemplate template) {
         this.messageService = messageService;
+        this.template = template;
     }
 
     @PostMapping
-    @MessageMapping("/messages")
-    @SendTo("/live")
-    public ResponseEntity createMessage(@RequestBody String message) {
+    public ResponseEntity createMessage(@RequestBody @Valid Message message) {
         LOGGER.info("Request: POST:/api/messages - Add message to queue");
 
+        template.convertAndSend("/topic/messages", message.getContent());
         messageService.publishMessage(message);
 
         return new ResponseEntity(HttpStatus.CREATED);
     }
+
+
 
     @GetMapping
     public ResponseEntity<List<Message>> getMessages() {
