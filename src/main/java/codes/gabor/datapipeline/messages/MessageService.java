@@ -22,10 +22,10 @@ public class MessageService {
         this.repository = repository;
     }
 
-    public void publishMessage(String message) {
+    public void publishMessage(Message message) {
         LOGGER.info("Publishing message...");
 
-        publisher.publish(message);
+        publisher.publish(message.getContent());
     }
 
     public void consumeMessage(Message message) {

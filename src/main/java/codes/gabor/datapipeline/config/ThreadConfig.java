@@ -32,7 +32,7 @@ public class ThreadConfig {
     }
 
     @Bean
-    public CommandLineRunner schedulingRunner(TaskExecutor executor) {
-        return args -> executor.execute(new MessageConsumerThread(context.getBean(MessageService.class)));
+    public CommandLineRunner schedulingRunner() {
+        return args -> threadPoolTaskExecutor().execute(new MessageConsumerThread(context.getBean(MessageService.class)));
     }
 }
