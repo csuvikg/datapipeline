@@ -16,7 +16,8 @@ running, as it provides the local MySQL and Redis instances. To run it, have Doc
 installed and use the `docker-compose -f docker-compose.yml up` command.
 
 The application can be started with the included Gradle wrapper. For that, use
-the `./gradlew bootRun` command. The API will be running on `https://localhost:8080`.
+the `./gradlew bootRun` command. The index page will be available at `http://localhost:8080`.
+For information on the REST endpoints, see the relevant section.
 
 ### REST endpoints
 | Endpoint         | HTTP Verb | Function                                                                 |
